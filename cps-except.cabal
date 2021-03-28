@@ -13,7 +13,7 @@ Description:         ExceptT replacement in CPS style, that can faster in some c
 
 source-repository head
   type:  git
-  location: https://github.com/kuribas/mfsolve
+  location: https://github.com/kuribas/cps-except
 
 library
   hs-source-dirs: src
