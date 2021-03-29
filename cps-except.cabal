@@ -1,6 +1,6 @@
 cabal-version:       >=1.10
 name:                cps-except
-version:             0.0.1.0
+version:             0.0.1.2
 synopsis:            ExceptT replacement in CPS style
 license:             BSD3
 license-file:        LICENSE

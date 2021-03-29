@@ -16,6 +16,16 @@ runCPSExceptT :: Applicative m => CPSExceptT e m a -> m (Either e a)
 runCPSExceptT (CPSExceptT f) = f (pure . Left)  (pure . Right)
 {-# INLINE runCPSExceptT #-}
 
+mapCPSExceptT :: (Monad m, Monad n) =>
+                 (m (Either e a) -> n (Either e' b)) -> CPSExceptT e m a
+              -> CPSExceptT e' n b
+mapCPSExceptT f m = CPSExceptT $ \failC succesC ->
+  either failC succesC =<< f (runCPSExceptT m)
+
+withExceptT :: Functor m => (e -> e') -> CPSExceptT e m a -> CPSExceptT e' m a
+withExceptT tr (CPSExceptT f) = CPSExceptT $ \failC succesC ->
+  f (failC . tr) succesC
+
 instance Functor (CPSExceptT e m) where
   fmap f (CPSExceptT g) = CPSExceptT $ \failC successC ->
     g failC (successC . f)
